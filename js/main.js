@@ -1,13 +1,14 @@
 const init = () => {
   let width  = window.innerWidth;
   let height  = window.innerHeight;
+  const r = 200;
   const canvas = document.querySelector('#main');
   // シーン
   const scene = new THREE.Scene();
   
   // カメラ
   const camera = new THREE.PerspectiveCamera(45, width / height);
-  camera.position.set(500, 500, 1000);
+  camera.position.set(500, 500, 500);
   camera.lookAt(0, 0, 0)
   scene.add(camera);
   
@@ -25,20 +26,21 @@ const init = () => {
   const starsGroup = new THREE.Group();
   scene.add(starsGroup)
 
-  for (let i = 0; i < 10; i++) {
-    const material = new THREE.MeshNormalMaterial();
-    const geometry = new THREE.BoxGeometry(40, 40, 40);
-    const mesh = new THREE.Mesh(geometry, material);
+  const starMaterial = new THREE.SpriteMaterial({
+    map: new THREE.TextureLoader().load('../img/star.png')
+  })
+  for (let i = 0; i < stars.length; i++) {
 
-    const radian = (i / 10) * Math.PI * 2;
-    mesh.position.set(
-      200 * Math.cos(radian), 
-      30, 
-      200 * Math.sin(radian) 
-    );
+    const sprite = new THREE.Sprite(starMaterial);
+
+    const radian = (i / stars.length) * Math.PI * 2;
+    sprite.position.x = r * Math.cos(radian); 
+    sprite.position.y = 30;
+    sprite.position.z = r * Math.sin(radian);
+    sprite.scale.set(30, 30, 30);
 
     // グループに追加する
-    starsGroup.add(mesh);
+    starsGroup.add(sprite);
   }
 
   // フレーム更新
