@@ -7,7 +7,8 @@ const init = () => {
   
   // カメラ
   const camera = new THREE.PerspectiveCamera(45, width / height);
-  camera.position.set(0, 0, 1000);
+  camera.position.set(500, 500, 1000);
+  camera.lookAt(0, 0, 0)
   scene.add(camera);
   
   // レンダラー
@@ -15,18 +16,33 @@ const init = () => {
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(width, height);
   canvas.appendChild(renderer.domElement);
-  
 
-  // 箱を作成
-  const geometry = new THREE.BoxGeometry(400, 400, 400);
-  const material = new THREE.MeshNormalMaterial();
-  const box = new THREE.Mesh(geometry, material);
-  scene.add(box);// シーンに追加
+  // 地面を作成
+  scene.add(new THREE.GridHelper(600));
+  scene.add(new THREE.AxesHelper(600));
 
+  // 星のグループ
+  const starsGroup = new THREE.Group();
+  scene.add(starsGroup)
+
+  for (let i = 0; i < 10; i++) {
+    const material = new THREE.MeshNormalMaterial();
+    const geometry = new THREE.BoxGeometry(40, 40, 40);
+    const mesh = new THREE.Mesh(geometry, material);
+
+    const radian = (i / 10) * Math.PI * 2;
+    mesh.position.set(
+      200 * Math.cos(radian), 
+      30, 
+      200 * Math.sin(radian) 
+    );
+
+    // グループに追加する
+    starsGroup.add(mesh);
+  }
 
   // フレーム更新
   const tick = () => {
-    box.rotation.y += 0.01;
     renderer.render(scene, camera)
     requestAnimationFrame(tick)
   }
