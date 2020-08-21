@@ -1,0 +1,14 @@
+perspectivecameraのプロパティは何だ？
+
+  // OrbitContrls
+  // const controls = new THREE.OrbitCOntrols(camera, renderer.domElement);
+  // controls.target.set(
+  //   camera.position.x,
+  //   camera.position.y,
+  //   camera.position.z
+  // );
+  // controls.autoRotate = true;
+  // controls.autoRotateSpeed = .1;
+  // controls.enableDemping = true;
+  // controls.dempingFactor = 0.5;
+  // controls.rotateSpeed = .1;
