@@ -3,7 +3,7 @@
  * @param {string} name 星の名前（日本語）
  * @param {Array.<number>} ra 赤経
  * @param {Array.<number>} dec 赤緯
- * @param {number} v 見かけの等級（利用予定なし）
+ * @param {number} v 見かけの等級
  */
 
 const stars = [

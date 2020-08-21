@@ -37,7 +37,9 @@ const init = () => {
     sprite.position.x = r * Math.cos(radian); 
     sprite.position.y = 30;
     sprite.position.z = r * Math.sin(radian);
-    sprite.scale.set(30, 30, 30);
+    // 星の大きさを計算
+    const starScale = -5 * stars[i].v + 50;
+    sprite.scale.set(starScale, starScale, starScale);
 
     // グループに追加する
     starsGroup.add(sprite);
