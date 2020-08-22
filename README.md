@@ -6,7 +6,9 @@ Three.jsを用いたプラネタリウムを作っています
 libsフォルダーにThree jsのJSファイルを保存します
 
 ## Licence
-[MIT Licence](https://github.com/appare45/Planetarium/blob/master/LICENCE)
+コード： [MIT Licence](https://github.com/appare45/Planetarium/blob/master/LICENCE)
+地球の画像：[Planet Texture Maps](http://planetpixelemporium.com/planets.html)
+
 
 ## Contact
 [Twitter](https://twitter.com/Appare45)

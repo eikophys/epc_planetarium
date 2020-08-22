@@ -53,6 +53,20 @@ const init = () => {
 
   }
 
+  // 地球
+  const earthGeometry = new THREE.SphereGeometry(70, 30, 30);
+  const earthMaterial = new THREE.MeshStandardMaterial({
+    map: new THREE.TextureLoader().load('../img/earthmap1k.jpg')
+  })
+  const earth = new THREE.Mesh(earthGeometry, earthMaterial)
+  scene.add(earth)
+
+  // 平行光源
+  const directionalLight = new THREE.DirectionalLight(0xFFFFFF);
+  directionalLight.position.set(1, 1, 1);
+  // シーンに追加
+  scene.add(directionalLight);
+
   // フレーム更新
   const tick = () => {
     renderer.render(scene, camera)
