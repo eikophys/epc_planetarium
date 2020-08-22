@@ -1,7 +1,7 @@
 const init = () => {
   let width  = window.innerWidth;
   let height  = window.innerHeight;
-  const r = 200;
+  const r = 200; // 半径
   const canvas = document.querySelector('#main');
   // シーン
   const scene = new THREE.Scene();
@@ -29,20 +29,28 @@ const init = () => {
   const starMaterial = new THREE.SpriteMaterial({
     map: new THREE.TextureLoader().load('../img/star.png')
   })
+
+  // 星の描画
   for (let i = 0; i < stars.length; i++) {
 
     const sprite = new THREE.Sprite(starMaterial);
+    
+    // 赤経を角度に変換したもの(ラジアン)
+    const ra = ((stars[i].ra[0] * (360/24) + stars[i].ra[1] * (360/24/60) + stars[i].ra[1] * (360/24/60) + stars[i].ra[2] * (360/24/60/60)) * Math.PI) / 180;
+    // 赤緯を角度に変換したもの（ラジアン）
+    const dec = ((stars[i].dec[0] + stars[i].dec[1] / 10 + stars[i].dec[2] / 100) * Math.PI) / 180
 
-    const radian = (i / stars.length) * Math.PI * 2;
-    sprite.position.x = r * Math.cos(radian); 
-    sprite.position.y = 30;
-    sprite.position.z = r * Math.sin(radian);
+    sprite.position.x = -r * Math.cos(ra) * Math.cos(dec);
+    sprite.position.y = r * Math.sin(dec);
+    sprite.position.z = r * Math.cos(dec) * Math.sin(ra);
+
     // 星の大きさを計算
     const starScale = -5 * stars[i].v + 50;
     sprite.scale.set(starScale, starScale, starScale);
 
     // グループに追加する
     starsGroup.add(sprite);
+
   }
 
   // フレーム更新
