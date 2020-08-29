@@ -39,10 +39,10 @@ const init = () => {
     const ra = ((stars[i].ra[0] * (360/24) + stars[i].ra[1] * (360/24/60) + stars[i].ra[1] * (360/24/60) + stars[i].ra[2] * (360/24/60/60)) * Math.PI) / 180;
     // 赤緯を角度に変換したもの（ラジアン）
     const dec = ((stars[i].dec[0] + stars[i].dec[1] / 10 + stars[i].dec[2] / 100) * Math.PI) / 180
+    const position = [r * Math.cos(ra) * Math.cos(dec), r * Math.sin(dec), r * Math.cos(dec) * Math.sin(ra)]
+    console.log(position)
 
-    sprite.position.x = -r * Math.cos(ra) * Math.cos(dec);
-    sprite.position.y = r * Math.sin(dec);
-    sprite.position.z = r * Math.cos(dec) * Math.sin(ra);
+    sprite.position.copy(new THREE.Vector3(position[0], position[1], position[2]))
 
     // 星の大きさを計算
     const starScale = -5 * stars[i].v + 50;
@@ -69,9 +69,26 @@ const init = () => {
 
   // フレーム更新
   const tick = () => {
+    control.update()
     renderer.render(scene, camera)
     requestAnimationFrame(tick)
+    directionalLight.position.copy(camera.position)
   }
+
+  const control = new THREE.OrbitControls(camera, renderer.domElement);
+
+  control.noPan = true;
+  control.enablePan = false
+  control.minDistance = 200;
+  control.maxDistance = 1000;
+  control.enableDamping = true;
+  control.dampingFactor = 0.1;
+
+  // 視点リセット
+  document.getElementById('resetButton').addEventListener('click', () => {
+    camera.position.set(500, 500, 500)
+  })
+
   
   tick();
 
