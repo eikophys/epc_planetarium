@@ -27,7 +27,7 @@ const init = () => {
   scene.add(starsGroup)
 
   const starMaterial = new THREE.SpriteMaterial({
-    map: new THREE.TextureLoader().load('../img/star.png')
+    map: new THREE.TextureLoader().load('src/img/star.png')
   })
 
   // 星の描画
@@ -56,7 +56,7 @@ const init = () => {
   // 地球
   const earthGeometry = new THREE.SphereGeometry(70, 30, 30);
   const earthMaterial = new THREE.MeshStandardMaterial({
-    map: new THREE.TextureLoader().load('../img/earthmap1k.jpg')
+    map: new THREE.TextureLoader().load('src/img/earthmap1k.jpg')
   })
   const earth = new THREE.Mesh(earthGeometry, earthMaterial)
   scene.add(earth)
@@ -87,6 +87,16 @@ const init = () => {
   // 視点リセット
   document.getElementById('resetButton').addEventListener('click', () => {
     camera.position.set(500, 500, 500)
+  })
+
+  // 地球削除
+  const earthToggle = document.querySelector('#earthToggle')
+  earthToggle.addEventListener('change', () => {
+    if(earthToggle.checked) {
+      scene.add(earth)
+    } else {
+      scene.remove(earth)
+    }
   })
 
   

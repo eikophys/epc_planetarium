@@ -1,2 +1,4 @@
-/libs/*
+src/libs/*
+/data/
+.DS_Store
 PSD/*
