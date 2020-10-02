@@ -2,3 +2,4 @@ src/libs/*
 /data/
 .DS_Store
 PSD/*
+/docs/

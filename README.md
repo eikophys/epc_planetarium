@@ -1,5 +1,6 @@
 # Planetarium
 Three.jsを用いたプラネタリウムを作っています
+[リポジトリ](https://github.com/appare45/epc_planetarium)
 
 ## Usage
 - [Three.js](https://threejs.org) 
@@ -9,6 +10,10 @@ libsフォルダーにThree jsのJSファイルを保存します
 - コード： [MIT Licence](https://github.com/appare45/Planetarium/blob/master/LICENCE)
 - 地球の画像：[Planet Texture Maps](http://planetpixelemporium.com/planets.html)
 
+## Branch
+
+- `master` : 公開用の完成したコードを置く
+- `develop` : 開発段階のコードを置く
 
 ## Contact
-[Twitter](https://twitter.com/Appare45)
+[GitHub](https://github.com/Appare45)

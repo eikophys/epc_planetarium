@@ -76,28 +76,89 @@ const init = () => {
   }
 
   const control = new THREE.OrbitControls(camera, renderer.domElement);
+  
+  // コントロールを制御する関数
+  /**
+   * @param {number} view 視点のステータス
+   * @param {THREE.PerspectiveCamera} camera カメラ
+   * @param {THREE.OrbitCOntrols}
+   */
 
-  control.noPan = true;
-  control.enablePan = false
-  control.minDistance = 200;
-  control.maxDistance = 1000;
-  control.enableDamping = true;
-  control.dampingFactor = 0.1;
-
+  const controlFunction = (view) => {
+    const switchButton = document.getElementById('resetButton')
+    console.log(view)
+    if (view == 3) {
+      switchButton.classList.remove('display_none')
+      camera.aspect = 45
+      camera.position.set(500, 500, 500);
+      camera.lookAt(0, 0, 0)
+      scene.add(camera);
+      control.noPan = true;
+      control.enablePan = false
+      control.minDistance = 200;
+      control.maxDistance = 1000;
+      control.enableDamping = true;
+      control.dampingFactor = 0.1;
+      earthToggle(true)
+    } else if (view == 1) {
+      switchButton.classList.add('display_none')
+      camera.aspect = 60
+      camera.position.set(0, 0, 0);
+      control.target.set(
+        camera.position.x + 0.01,
+        camera.position.y,
+        camera.position.z
+      );
+      control.enableDamping = true;
+      control.dampingFactor = 1;
+      scene.add(camera);
+      earthToggle(false)
+    }
+    return [camera, control]
+  }
+  
+    
   // 視点リセット
+  
   document.getElementById('resetButton').addEventListener('click', () => {
-    camera.position.set(500, 500, 500)
+    if (viewStatus == 3) {
+      camera.position.set(500, 500, 500);
+      control.target.set(0, 0, 0)
+    }
+  })
+
+  // 視点変更
+  const toggleViewDom = document.getElementById('toggleView')
+  // 現在の視点
+  let viewStatus = 3
+  toggleViewDom.addEventListener('click', () => {
+    if (viewStatus === 3) {
+      toggleViewDom.textContent = '3人称視点に変更';
+      viewStatus = 1;
+    } else {
+      toggleViewDom.textContent = '1人称視点に変更';
+      viewStatus = 3;
+    }
+    console.log(viewStatus)
+    console.log(controlFunction(viewStatus))
   })
 
   // 地球削除
-  const earthToggle = document.querySelector('#earthToggle')
-  earthToggle.addEventListener('change', () => {
-    if(earthToggle.checked) {
+  
+  document.querySelector('#earthToggle').addEventListener('change', () => {
+    earthToggle(document.querySelector('#earthToggle').checked)
+  })
+
+  const earthToggle = status => {
+    const Toggler = document.querySelector('#earthToggle')
+    if (status) {
       scene.add(earth)
+      Toggler.checked = true
     } else {
       scene.remove(earth)
+      Toggler.checked = false
     }
-  })
+  }
 
   
   tick();
