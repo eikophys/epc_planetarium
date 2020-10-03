@@ -19,14 +19,14 @@ body {
   position: fixed;
   bottom: 10px; right: 10px;
   padding: 10px 15px;
-  background: rgba(128, 156, 165, 0.445);
+  background: rgba(43, 40, 40, 0.678);
   max-width: 50vw; max-height: 50vh;
   color: white;
   display: flex;
   align-items: center;
   transition: all .3s;
   &:hover {
-    background: rgba(76, 85, 88, 0.705);
+    background: rgba(23, 25, 26, 0.705);
   }
   & ul {
     list-style: none;
@@ -73,9 +73,7 @@ body {
     }
   }
   & label {
-    // transition: .1s;
     &:hover {
-      // background: white;
       & + .switch {
         background: white;
         color: black;
@@ -103,6 +101,25 @@ body {
     &::after {
       transition: .3s;
       content: '×';
+    }
+  }
+}
+
+.footer {
+  background: rgba(43, 40, 40, 0.678);
+  position: fixed;
+  bottom: 0;
+  font-family: 'Courier New', Courier, monospace;
+  left: 0;
+  width: 100vw;
+  padding: 3px 7px;
+  font-size: smaller;
+  color: gray;
+  & * {
+    color: gray;
+    margin: 0 3px;
+    &:hover {
+      opacity: .8;
     }
   }
 }

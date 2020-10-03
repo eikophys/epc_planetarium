@@ -6,7 +6,7 @@
  * @param {number} v 見かけの等級
  */
 
-const stars = [
+let stars = [
   {
     "name": "シリウス",
     "ra": [6, 45, 8.91728],
