@@ -57,7 +57,7 @@ const init = () => {
   }
 
   // 地球
-  const earthGeometry = new THREE.SphereGeometry(70, 30, 30);
+  const earthGeometry = new THREE.SphereGeometry(40, 30, 30);
   const earthMaterial = new THREE.MeshStandardMaterial({
     map: new THREE.TextureLoader().load('src/img/earthmap1k.jpg')
   })
@@ -74,20 +74,22 @@ const init = () => {
   
   // 視点の切り替え（引数：視点1/3）
   const controlFunction = (view) => {
-    const switchButton = document.getElementById('resetButton')
+    const switchButton = document.getElementById('earthSwitch')
+    const resetButton = document.getElementById('resetButton')
     if (view == 3) {
       control3 = new THREE.OrbitControls(camera3, renderer.domElement);
       switchButton.classList.remove('display_none')
+      resetButton.classList.remove('display_none')
       control3.noPan = true;
       control3.enablePan = false
       control3.minDistance = 200;
       control3.maxDistance = 1000;
       control3.enableDamping = true;
       control3.dampingFactor = 0.1;
-      earthToggle(true)
     } else if (view == 1) {
       control3 = new THREE.OrbitControls(camera1, renderer.domElement);
       switchButton.classList.add('display_none')
+      resetButton.classList.add('display_none')
       control3.target.set(
         camera1.position.x + 0.01,
         camera1.position.y,
@@ -95,7 +97,6 @@ const init = () => {
       );
       control3.enableDamping = true;
       control3.dampingFactor = 1;
-      earthToggle(false)
     }
   }
     
@@ -115,38 +116,38 @@ const init = () => {
   })
  
   // 地球表示切替
-  document.querySelector('#earthToggle').addEventListener('change', () => {
-    earthToggle(document.querySelector('#earthToggle').checked)
-  })
-  const earthToggle = status => {
+  document.querySelector('#earthToggle').addEventListener('change', () => {    
     const Toggler = document.querySelector('#earthToggle')
+    const status= Toggler.checked
     if (status) {
       scene.add(earth)
-      Toggler.checked = true
+      Toggler.checked = true;
     } else {
       scene.remove(earth)
-      Toggler.checked = false
+      Toggler.checked = false;
     }
+  })
+
+  
+  const resetView = () => {
+    camera3.position.set(500, 500, 500);
+    control3.target.set(0, 0, 0)
   }
 
   // 視点リセット  
-  document.getElementById('resetButton').addEventListener('click', () => {
-    if (viewStatus == 3) {
-      camera3.position.set(500, 500, 500);
-      control3.target.set(0, 0, 0)
-    }
-  })
+  document.getElementById('resetButton').addEventListener('click', resetView())
+
   
   // フレーム更新
   const tick = () => {
     control3.update()
     if (viewStatus == 3) {
-      renderer.render(scene, camera3)
+      renderer.render(scene, camera3);
     } else {
-      renderer.render(scene, camera1)
+      renderer.render(scene, camera1);
     }
-    requestAnimationFrame(tick)
-    directionalLight.position.copy(camera3.position)
+    requestAnimationFrame(tick);
+    directionalLight.position.copy(camera3.position);
   }
   
   tick();
