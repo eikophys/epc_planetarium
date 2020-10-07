@@ -70,33 +70,33 @@ const init = () => {
   // シーンに追加
   scene.add(directionalLight);
 
-  let control3 = new THREE.OrbitControls(camera3, renderer.domElement);
+  const control3 = new THREE.OrbitControls(camera3, renderer.domElement);
+  const control1 = new THREE.OrbitControls(camera1, renderer.domElement);
+  control3.noPan = true;
+  control3.enablePan = false
+  control3.minDistance = 200;
+  control3.maxDistance = 1000;
+  control3.enableDamping = true;
+  control3.dampingFactor = 0.1;
+  
+  control1.target.set(
+    camera1.position.x + 0.01,
+    camera1.position.y,
+    camera1.position.z
+  );
+  control1.enableDamping = true;
+  control1.dampingFactor = 0.1;
   
   // 視点の切り替え（引数：視点1/3）
   const controlFunction = (view) => {
     const switchButton = document.getElementById('earthSwitch')
     const resetButton = document.getElementById('resetButton')
     if (view == 3) {
-      control3 = new THREE.OrbitControls(camera3, renderer.domElement);
       switchButton.classList.remove('display_none')
       resetButton.classList.remove('display_none')
-      control3.noPan = true;
-      control3.enablePan = false
-      control3.minDistance = 200;
-      control3.maxDistance = 1000;
-      control3.enableDamping = true;
-      control3.dampingFactor = 0.1;
     } else if (view == 1) {
-      control3 = new THREE.OrbitControls(camera1, renderer.domElement);
       switchButton.classList.add('display_none')
       resetButton.classList.add('display_none')
-      control3.target.set(
-        camera1.position.x + 0.01,
-        camera1.position.y,
-        camera1.position.z
-      );
-      control3.enableDamping = true;
-      control3.dampingFactor = 1;
     }
   }
     

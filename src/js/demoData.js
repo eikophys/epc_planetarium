@@ -19,7 +19,7 @@ const fpsFunc = () => {
 }
 
 const updateFps = () => {
-  document.getElementById('fps').textContent = fps.length
+  document.getElementById('fps').textContent = fps;
   fps = 0;
 }
 
