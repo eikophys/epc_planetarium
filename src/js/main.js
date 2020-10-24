@@ -9,22 +9,28 @@ const init = () => {
   // カメラ(1人称・3人称)
   const camera1 = new THREE.PerspectiveCamera(60, width / height);
   const camera3 = new THREE.PerspectiveCamera(45, width / height);
+  console.log(typeof(camera1));
   camera3.position.set(500, 500, 500);
   camera3.lookAt(0, 0, 0)
   scene.add(camera3);
   camera1.aspect = 60
-  camera1.position.set(0, 0, 0);
+  camera1.position.set(0, 100, 0);
   scene.add(camera1);
+
+  // レイキャスト
+  const raycaster = new THREE.Raycaster();
+  const mouse = new THREE.Vector2();
+
+  const onMouseMove = event => {
+    mouse.x = (event.clientX / width) * 2 - 1;
+    mouse.y = (event.clienY / height) * 2 + 1;
+  }
   
   // レンダラー
   const renderer = new THREE.WebGLRenderer({ antialias:true });
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(width, height);
   canvas.appendChild(renderer.domElement);
-
-  // 地面を作成
-  scene.add(new THREE.GridHelper(600));
-  scene.add(new THREE.AxesHelper(600));
 
   // 星のグループ
   const starsGroup = new THREE.Group();
@@ -36,7 +42,6 @@ const init = () => {
 
   // 星の描画
   for (let i = 0; i < stars.length; i++) {
-
     const sprite = new THREE.Sprite(starMaterial);
     
     // 赤経を角度に変換したもの(ラジアン)
@@ -64,6 +69,16 @@ const init = () => {
   const earth = new THREE.Mesh(earthGeometry, earthMaterial)
   scene.add(earth)
 
+  // 地面
+  const plane = new THREE.Mesh(
+    new THREE.PlaneGeometry(2.5 * r, 2.5 * r, 2),
+    new THREE.MeshBasicMaterial({
+      color : 0x0F0F0F
+    })
+  )
+  plane.rotation.x = Math.PI / -2
+  scene.add(plane)
+
   // 平行光源
   const directionalLight = new THREE.DirectionalLight(0xFFFFFF);
   directionalLight.position.set(1, 1, 1);
@@ -73,7 +88,7 @@ const init = () => {
   const control3 = new THREE.OrbitControls(camera3, renderer.domElement);
   const control1 = new THREE.OrbitControls(camera1, renderer.domElement);
   control3.noPan = true;
-  control3.enablePan = false
+  control3.enablePan = false  
   control3.minDistance = 200;
   control3.maxDistance = 1000;
   control3.enableDamping = true;
@@ -89,14 +104,18 @@ const init = () => {
   
   // 視点の切り替え（引数：視点1/3）
   const controlFunction = (view) => {
-    const switchButton = document.getElementById('earthSwitch')
-    const resetButton = document.getElementById('resetButton')
+    const switchButton = document.getElementById('earthSwitch');
+    const resetButton = document.getElementById('resetButton');
     if (view == 3) {
-      switchButton.classList.remove('display_none')
-      resetButton.classList.remove('display_none')
+      switchButton.classList.remove('display_none');
+      switchButton.value = true
+      resetButton.classList.remove('display_none');
+      scene.add(earth)
     } else if (view == 1) {
       switchButton.classList.add('display_none')
+      switchButton.value = false
       resetButton.classList.add('display_none')
+      scene.remove(earth)
     }
   }
     
@@ -127,27 +146,22 @@ const init = () => {
       Toggler.checked = false;
     }
   })
+        
+  // 視点リセット
+  document.getElementById('resetButton').addEventListener('click', () => {
+    control3.reset()
+  })
 
-  
-  const resetView = () => {
-    camera3.position.set(500, 500, 500);
-    control3.target.set(0, 0, 0)
-  }
-
-  // 視点リセット  
-  document.getElementById('resetButton').addEventListener('click', resetView())
-
-  
   // フレーム更新
   const tick = () => {
     control3.update()
-    if (viewStatus == 3) {
-      renderer.render(scene, camera3);
-    } else {
-      renderer.render(scene, camera1);
-    }
+    renderer.render(scene, viewStatus === 3 ? camera3 : camera1)
     requestAnimationFrame(tick);
     directionalLight.position.copy(camera3.position);
+
+    // レイキャスト
+    raycaster.setFromCamera( mouse, camera1);
+    const intersects = raycaster.intersectObjects(scene.children);
   }
   
   tick();
