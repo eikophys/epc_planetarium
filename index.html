@@ -1,20 +1,13 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Planetarium</title>
-  <link rel="stylesheet" href="src/styles/styles.css">
-  <script src="src/libs/three.js"></script>
-  <script src="src/libs/FirstPersonControls.js"></script>
-  <script src="src/libs/OrbitControls.js"></script>
-  <script src="src/js/list.js"></script>
-  <script src="src/js/demoData.js"></script>
-  <script src="src/js/main.js"></script>
-  <script>
-    window.addEventListener('load', init);  
-  </script>
+  <script src="main.js"></script>
 </head>
+
 <body>
   <main id="main">
   </main>
@@ -26,12 +19,17 @@
       <li>現在のFPS: <span id="fps"></span></li>
       <li id='earthSwitch'>
         地球の表示
-        <div class="toggleButton"><input type="checkbox" id="earthToggle" checked><label for="earthToggle"><span></span></label><div class="switch"></div></div>
+        <div class="toggleButton"><input type="checkbox" id="earthToggle" checked><label
+            for="earthToggle"><span></span></label>
+          <div class="switch"></div>
+        </div>
       </li>
     </ul>
   </section>
   <footer class="footer">
-    &copy; Appare 2020 About: <a href="https://github.com/appare45/epc_planetarium">GitHub</a> Image: <a href="http://planetpixelemporium.com/planets.html"> Copyright &copy; by James Hastings-Trew</a>
+    &copy; Appare 2020 About: <a href="https://github.com/appare45/epc_planetarium">GitHub</a> Image: <a
+      href="http://planetpixelemporium.com/planets.html"> Copyright &copy; by James Hastings-Trew</a>
   </footer>
 </body>
+
 </html>

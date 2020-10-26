@@ -1,0 +1,52 @@
+{
+  "name": "epc_planetarium",
+  "version": "1.0.0",
+  "description": "Three.jsを用いたプラネタリウムを作っています\r [リポジトリ](https://github.com/appare45/epc_planetarium)",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "tsc",
+    "fix:prettier": "prettier --write src",
+    "lint:prettier": "prettier --check src",
+    "fix": "run-s fix:prettier fix:eslint",
+    "fix:eslint": "eslint src --ext .ts --fix",
+    "lint": "run-p lint:prettier lint:eslint",
+    "lint:eslint": "eslint src --ext .ts",
+    "build": "node build.js & webpack",
+    "watch": "node build.js & webpack --watch",
+    "start": "node build.js & webpack serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/appare45/epc_planetarium.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/appare45/epc_planetarium/issues"
+  },
+  "homepage": "https://github.com/appare45/epc_planetarium#readme",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.5.0",
+    "@typescript-eslint/parser": "^4.5.0",
+    "css-loader": "^5.0.0",
+    "eslint": "^7.12.0",
+    "prettier": "^2.1.2",
+    "sass": "^1.27.0",
+    "sass-loader": "^10.0.4",
+    "style-loader": "^2.0.0",
+    "ts-loader": "^8.0.7",
+    "ts-node": "^9.0.0",
+    "ts-node-dev": "^1.0.0",
+    "typescript": "^4.0.3",
+    "webpack": "^5.2.0",
+    "webpack-cli": "^4.1.0",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "dependencies": {
+    "three": "^0.121.1"
+  }
+}
