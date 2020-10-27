@@ -7,7 +7,6 @@ import '../scss/styles.scss';
 window.addEventListener('load', init);
 
 function init(): void {
-    console.log('Hello world from TCS!');
     let width: number = window.innerWidth;
     let height: number = window.innerHeight;
     const r = 200; // 半径

@@ -1,10 +1,11 @@
+const path = require('path');
 const MODE = "development";
 const enabledSourceMap = MODE === "development";
 
 module.exports = {
   // production / development
   mode: MODE,
-  watch: true,
+  // watch: true,
 
   entry: './src/ts/main.ts',
 
@@ -47,7 +48,8 @@ module.exports = {
     ],
   },
   devServer: {
-    open: true
+    open: true,
+    contentBase: path.join(__dirname, 'dist')
   },
   watchOptions: {
     poll: true,

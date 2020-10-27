@@ -1,133 +1,136 @@
 body {
-  margin: 0;
-  padding: 0;
-  background: #000000;
-  overflow: hidden;
-  font-family: 'Courier New', Courier, "Hiragino Kaku Gothic ProN", "Hiragino Sans", "BIZ UDPGothic", Meiryo, monospace
+    margin: 0;
+    padding: 0;
+    background: #000000;
+    overflow: hidden;
+    font-family: 'Courier New', Courier, 'Hiragino Kaku Gothic ProN',
+        'Hiragino Sans', 'BIZ UDPGothic', Meiryo, monospace;
 }
 
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
-
 
 .control {
-  position: fixed;
-  bottom: 30px; right: 10px;
-  padding: 10px 10px;
-  background: rgba(43, 40, 40, 0.678);
-  max-width: 50vw; max-height: 50vh;
-  color: white;
-  display: flex;
-  align-items: center;
-  transition: all .3s;
-  &:hover {
-    background: rgba(23, 25, 26, 0.705);
-  }
-  & ul {
-    list-style: none;
-    & li {
-      margin: 5px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-  }
-  & button {
-    transition: all .2s;
-    border: 1px solid white;
-    background: none;
+    position: fixed;
+    bottom: 30px;
+    right: 10px;
+    padding: 10px 10px;
+    background: rgba(43, 40, 40, 0.678);
+    max-width: 50vw;
+    max-height: 50vh;
     color: white;
-    padding: 5px 10px;
-    cursor: pointer;
-    width: 100%;
-    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s;
     &:hover {
-      background: white;
-      color: black;
+        background: rgba(23, 25, 26, 0.705);
     }
-    &:active {
-      opacity: .9;
+    & ul {
+        list-style: none;
+        & li {
+            margin: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
     }
-  }
+    & button {
+        transition: all 0.2s;
+        border: 1px solid white;
+        background: none;
+        color: white;
+        padding: 5px 10px;
+        cursor: pointer;
+        width: 100%;
+        border-radius: 3px;
+        &:hover {
+            background: white;
+            color: black;
+        }
+        &:active {
+            opacity: 0.9;
+        }
+    }
 }
 
-$button_width : 45px;
+$button_width: 45px;
 .toggleButton {
-  z-index: 1;
-  letter-spacing: 0;
-  width: $button_width;
-  margin-left: 5px;
-  position: relative;
-  & input[type='checkbox'] {
-    display: none;
-    &:checked {
-      & ~ .switch {
-        transform: translateX($button_width / 2);
-        &::after {
-          content: '✓';
+    z-index: 1;
+    letter-spacing: 0;
+    width: $button_width;
+    margin-left: 5px;
+    position: relative;
+    & input[type='checkbox'] {
+        display: none;
+        &:checked {
+            & ~ .switch {
+                transform: translateX($button_width / 2);
+                &::after {
+                    content: '✓';
+                }
+            }
         }
-      }
     }
-  }
-  & label {
-    z-index: 2;
-    &:hover {
-      & + .switch {
-        background: white;
-        color: black;
-        font-weight: bold;
-      }
+    & label {
+        z-index: 2;
+        &:hover {
+            & + .switch {
+                background: white;
+                color: black;
+                font-weight: bold;
+            }
+        }
+        display: block;
+        height: $button_width / 2;
+        border: 2px solid white;
+        border-radius: 20px;
+        text-align: center;
+        cursor: pointer;
     }
-    display: block;
-    height: $button_width / 2;
-    border: 2px solid white;
-    border-radius: 20px;
-    text-align: center;
-    cursor: pointer;
-  }
-  & .switch {
-    z-index: -10;
-    position: absolute;
-    width: $button_width / 2;
-    height: $button_width / 2;
-    line-height: $button_width / 2;
-    text-align: center;
-    top: 0; left: 1.5px;
-    border: 2px solid white;
-    border-radius: 100%;
-    transition: .3s;
-    font-family: monospace;
-    &::after {
-      line-height: $button_width / 2;
-      font-size: $button_width / 4;
-      transition: .3s;
-      content: '×';
+    & .switch {
+        z-index: -10;
+        position: absolute;
+        width: $button_width / 2;
+        height: $button_width / 2;
+        line-height: $button_width / 2;
+        text-align: center;
+        top: 0;
+        left: 1.5px;
+        border: 2px solid white;
+        border-radius: 100%;
+        transition: 0.3s;
+        font-family: monospace;
+        &::after {
+            line-height: $button_width / 2;
+            font-size: $button_width / 4;
+            transition: 0.3s;
+            content: '×';
+        }
     }
-  }
 }
 
 .footer {
-  background: rgba(43, 40, 40, 0.678);
-  position: fixed;
-  bottom: 0;
-  font-family: 'Courier New', Courier, monospace;
-  left: 0;
-  width: 100vw;
-  padding: 3px 7px;
-  font-size: smaller;
-  color: gray;
-  & * {
+    background: rgba(43, 40, 40, 0.678);
+    position: fixed;
+    bottom: 0;
+    font-family: 'Courier New', Courier, monospace;
+    left: 0;
+    width: 100vw;
+    padding: 3px 7px;
+    font-size: smaller;
     color: gray;
-    margin: 0 3px;
-    &:hover {
-      opacity: .8;
+    & * {
+        color: gray;
+        margin: 0 3px;
+        &:hover {
+            opacity: 0.8;
+        }
     }
-  }
 }
 
 .control .display_none {
-  display: none;
+    display: none;
 }

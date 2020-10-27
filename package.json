@@ -16,7 +16,7 @@
     "lint:eslint": "eslint src --ext .ts",
     "build": "node build.js & webpack",
     "watch": "node build.js & webpack --watch",
-    "start": "node build.js & webpack serve"
+    "start": "node build.js & webpack serve & webpack --watch"
   },
   "repository": {
     "type": "git",
