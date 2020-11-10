@@ -7,6 +7,8 @@ import '../scss/styles.scss';
 window.addEventListener('load', init);
 
 function init(): void {
+    console.log('H');
+
     let width: number = window.innerWidth;
     let height: number = window.innerHeight;
     const r = 200; // 半径
@@ -45,9 +47,18 @@ function init(): void {
     scene.add(starsGroup);
 
     const starMaterial: THREE.SpriteMaterial = new THREE.SpriteMaterial({
-        map: new THREE.TextureLoader().load('../img/star.png'),
+        map: new THREE.TextureLoader().load('img/star.png'),
     });
 
+    type starsObjects = {
+        sprite: THREE.Sprite;
+        name: string;
+        v: number;
+    };
+
+    const star1: starsObjects[] = [];
+
+    console.log(star1);
     // 星の描画
     for (let i = 0; i < stars.length; i++) {
         const sprite = new THREE.Sprite(starMaterial);
@@ -79,9 +90,17 @@ function init(): void {
         const starScale: number = stars[i].v - 1;
         sprite.scale.set(starScale, starScale, starScale);
 
+        star1.push({
+            name: stars[i].name,
+            v: stars[i].v,
+            sprite: sprite,
+        });
+
         // グループに追加する
         starsGroup.add(sprite);
     }
+
+    console.log(star1);
 
     // 地球
     const earthGeometry: THREE.SphereGeometry = new THREE.SphereGeometry(
@@ -91,7 +110,7 @@ function init(): void {
     );
     const earthMaterial: THREE.MeshStandardMaterial = new THREE.MeshStandardMaterial(
         {
-            map: new THREE.TextureLoader().load('../img/earthmap1k.jpg'),
+            map: new THREE.TextureLoader().load('img/earthmap1k.jpg'),
         }
     );
     const earth: THREE.Mesh = new THREE.Mesh(earthGeometry, earthMaterial);
@@ -171,25 +190,29 @@ function init(): void {
     });
 
     // 地球表示切替
-    document.querySelector('#earthToggle')?.addEventListener('change', () => {
-        const Toggler: HTMLInputElement = <HTMLInputElement>(
-            document.querySelector('#earthToggle')
-        );
-        const status = Toggler.checked;
-        if (status) {
-            scene.add(earth);
-            Toggler.checked = true;
-        } else {
-            scene.remove(earth);
-            Toggler.checked = false;
-        }
-    });
+    document
+        .querySelector('#earthToggle')
+        ?.addEventListener('change', (): void => {
+            const Toggler: HTMLInputElement = <HTMLInputElement>(
+                document.querySelector('#earthToggle')
+            );
+            const status = Toggler.checked;
+            if (status) {
+                scene.add(earth);
+                Toggler.checked = true;
+            } else {
+                scene.remove(earth);
+                Toggler.checked = false;
+            }
+        });
 
     // 視点リセット
-    document.getElementById('resetButton')?.addEventListener('click', () => {
-        control3.reset();
-        console.log('reset');
-    });
+    document
+        .getElementById('resetButton')
+        ?.addEventListener('click', (): void => {
+            control3.reset();
+            console.log('reset');
+        });
 
     // フレーム更新
     const tick = (): void => {
