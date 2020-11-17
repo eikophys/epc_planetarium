@@ -20,7 +20,11 @@ try {
 
   if (fs.statSync('src/html/index.html')) {
     // index.htmlのコピー
-    fs.copyFileSync('src/html/index.html', `${folder}/index.html`)
+    try {
+      fs.copyFileSync('src/html/index.html', `${folder}/index.html`)
+    } catch (e) {
+      console.error(`Error: Can't copy index.html(${e})`)
+    }
   }
 
   if (fs.statSync('src/img')) {
@@ -34,5 +38,5 @@ try {
     console.info("Set up files");
   }
 } catch (e) {
-  console.error(`Error ${e}`)
+  console.error(`Process error ${e}`)
 }

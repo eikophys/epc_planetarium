@@ -7,8 +7,6 @@ import '../scss/styles.scss';
 window.addEventListener('load', init);
 
 function init(): void {
-    console.log('H');
-
     let width: number = window.innerWidth;
     let height: number = window.innerHeight;
     const r = 200; // 半径
@@ -51,14 +49,13 @@ function init(): void {
     });
 
     type starsObjects = {
-        sprite: THREE.Sprite;
-        name: string;
-        v: number;
+        sprite: readonly THREE.Sprite[];
+        name: readonly string[];
+        v: readonly number[];
     };
 
-    const star1: starsObjects[] = [];
+    const sprites: THREE.Sprite[] = [];
 
-    console.log(star1);
     // 星の描画
     for (let i = 0; i < stars.length; i++) {
         const sprite = new THREE.Sprite(starMaterial);
@@ -90,17 +87,34 @@ function init(): void {
         const starScale: number = stars[i].v - 1;
         sprite.scale.set(starScale, starScale, starScale);
 
-        star1.push({
-            name: stars[i].name,
-            v: stars[i].v,
-            sprite: sprite,
-        });
+        sprites.push(sprite);
 
         // グループに追加する
         starsGroup.add(sprite);
     }
 
-    console.log(star1);
+    const mouse = new THREE.Vector2();
+    // レイキャスト
+    const raycast: THREE.Raycaster = new THREE.Raycaster();
+    canvas.addEventListener('mousemove', (event) => {
+        const element: any = event.currentTarget;
+        const x: number = event.clientX;
+        const y: number = event.clientY;
+        const w: number = element?.offsetWidth;
+        const h: number = element?.offsetHeight;
+        mouse.x = (x / w) * 2 - 1;
+        mouse.y = -(y / h) * 2 + 1;
+    });
+
+    // ドーム
+    const SPGeometry: THREE.SphereGeometry = new THREE.SphereGeometry(
+        1.1 * r,
+        12,
+        5
+    );
+    const SPMaterial: THREE.MeshBasicMaterial = new THREE.MeshBasicMaterial();
+    const dome: THREE.Mesh = new THREE.Mesh(SPGeometry, SPMaterial);
+    scene.add(dome);
 
     // 地球
     const earthGeometry: THREE.SphereGeometry = new THREE.SphereGeometry(
@@ -182,12 +196,13 @@ function init(): void {
         document.getElementById('toggleView')
     );
     // 現在の視点
-    let viewStatus: 1 | 3 = 3;
+    let viewStatus: 1 | 3 = 1;
     toggleViewDom.addEventListener('click', (): void => {
         toggleViewDom.textContent = `${viewStatus}人称視点に変更`;
         viewStatus = viewStatus === 3 ? 1 : 3;
         controlFunction(viewStatus);
     });
+    controlFunction(viewStatus);
 
     // 地球表示切替
     document
@@ -220,6 +235,17 @@ function init(): void {
         renderer.render(scene, viewStatus === 3 ? camera3 : camera1);
         requestAnimationFrame(tick);
         directionalLight.position.copy(camera3.position);
+        if (viewStatus === 1) {
+            raycast.setFromCamera(mouse, camera3);
+            const intersects: THREE.Intersection[] = raycast.intersectObjects(
+                sprites
+            );
+            sprites.map((mesh) => {
+                if (intersects.length > 0 && mesh === intersects[0].object) {
+                    console.log(mesh);
+                }
+            });
+        }
     };
 
     tick();
