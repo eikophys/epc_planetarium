@@ -1,6 +1,6 @@
 # Planetarium
 
-Three.js を用いたプラネタリウムを作っています
+Three.jsを用いたプラネタリウムを作っています
 [リポジトリ](https://github.com/appare45/epc_planetarium)
 
 ## Usage
@@ -16,7 +16,7 @@ npm run build
 # Watch
 npm run watch
 # Server
-npm run server
+npm run start
 ```
 
 ## Licence
@@ -31,4 +31,4 @@ npm run server
 
 ## Contact
 
-[GitHub](https://github.com/Appare45)
+@appare45
