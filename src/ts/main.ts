@@ -55,24 +55,16 @@ function init(): void {
     };
 
     const sprites: THREE.Sprite[] = [];
+    const starsData: starsObjects[] = [];
 
     // 星の描画
     for (let i = 0; i < stars.length; i++) {
         const sprite = new THREE.Sprite(starMaterial);
 
         // 赤経を角度に変換したもの(ラジアン)
-        const ra: number =
-            ((stars[i].ra[0] * (360 / 24) +
-                stars[i].ra[1] * (360 / 24 / 60) +
-                stars[i].ra[1] * (360 / 24 / 60) +
-                stars[i].ra[2] * (360 / 24 / 60 / 60)) *
-                Math.PI) /
-            180;
+        const ra: number = (stars[i].ra * Math.PI) / 180;
         // 赤緯を角度に変換したもの（ラジアン）
-        const dec: number =
-            ((stars[i].dec[0] + stars[i].dec[1] / 10 + stars[i].dec[2] / 100) *
-                Math.PI) /
-            180;
+        const dec: number = (stars[i].dec * Math.PI) / 180;
         const position: readonly number[] = [
             r * Math.cos(ra) * Math.cos(dec),
             r * Math.sin(dec),
@@ -84,7 +76,7 @@ function init(): void {
         );
 
         // 星の大きさを計算
-        const starScale: number = stars[i].v - 1;
+        const starScale: number = stars[i].st_optmag;
         sprite.scale.set(starScale, starScale, starScale);
 
         sprites.push(sprite);

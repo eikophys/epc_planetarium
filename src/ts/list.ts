@@ -6,45 +6,24 @@
  * @param {number} v 見かけの等級
  */
 type stars_dataset = {
-    name: string;
-    ra: [number, number, number];
-    dec: [number, number, number];
-    v: number;
+    ra: number;
+    dec: number;
+    pl_name: string;
+    st_dist: number;
+    st_optmag: number;
 };
 
-export const stars: stars_dataset[] = [
-    {
-        name: 'シリウス',
-        ra: [6, 45, 8.91728],
-        dec: [-16, 42, 58.017],
-        v: 1.46,
-    },
-    {
-        name: 'カノープス',
-        ra: [6, 23, 57.10988],
-        dec: [-52, 41, 44.381],
-        v: -0.74,
-    },
-    {
-        name: 'ポラリス',
-        ra: [2, 31, 48.7],
-        dec: [89, 15, 51],
-        v: 1.46,
-    },
-];
+export const stars: stars_dataset[] = [];
 
 // Demo Data
 window.addEventListener('load', () => {
     for (let i = 0; i < 3000; i++) {
         stars.push({
-            name: 'Demo',
-            ra: [Math.random() * 24, Math.random() * 60, Math.random() * 60],
-            dec: [
-                Math.random() * 180 - 90,
-                Math.random() * 100,
-                Math.random() * 100,
-            ],
-            v: Math.random() * 6,
+            pl_name: 'Demo',
+            ra: Math.random() * 360,
+            dec: Math.random() * 180 - 90,
+            st_optmag: Math.random() * 6,
+            st_dist: 10,
         });
     }
 
