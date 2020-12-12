@@ -19,7 +19,7 @@ export const stars: stars_dataset[] = [];
 window.addEventListener('load', () => {
     for (let i = 0; i < 3000; i++) {
         stars.push({
-            pl_name: 'Demo',
+            pl_name: `${Math.round(Math.random() * 100000)}`,
             ra: Math.random() * 360,
             dec: Math.random() * 180 - 90,
             st_optmag: Math.random() * 6,

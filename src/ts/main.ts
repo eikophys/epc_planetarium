@@ -70,6 +70,7 @@ function init(): void {
             r * Math.sin(dec),
             r * Math.cos(dec) * Math.sin(ra),
         ];
+        sprite.name = stars[i].pl_name;
 
         sprite.position.copy(
             new THREE.Vector3(position[0], position[1], position[2])
@@ -234,6 +235,12 @@ function init(): void {
             );
             sprites.map((mesh) => {
                 if (intersects.length > 0 && mesh === intersects[0].object) {
+                    const info_element: HTMLElement = document.getElementById(
+                        'star_info'
+                    )!;
+                    info_element.querySelector(
+                        '.info-pannel_title'
+                    )!.textContent = mesh.name;
                     console.log(mesh);
                 }
             });
