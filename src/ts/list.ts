@@ -26,19 +26,4 @@ window.addEventListener('load', () => {
             st_dist: 10,
         });
     }
-
-    fpsFunc();
 });
-
-let fps = 0;
-const fpsFunc = (): void => {
-    fps++;
-    requestAnimationFrame(fpsFunc);
-};
-
-const updateFps = () => {
-    document.getElementById('fps')!.textContent = String(fps);
-    fps = 0;
-};
-
-setInterval(updateFps, 1000);

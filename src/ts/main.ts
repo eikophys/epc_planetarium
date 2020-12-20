@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import './list.ts';
 import drawStar from './drawStar';
-import { stars } from './list';
+import fps from './fps';
 import '../scss/styles.scss';
 
 window.addEventListener('load', init);
@@ -219,4 +219,7 @@ function init(): void {
         camera1.aspect = width / height;
         camera1.updateProjectionMatrix();
     });
+
+    // fps
+    fps();
 }
