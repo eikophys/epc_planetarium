@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import './list.ts';
+import drawStar from './drawStar';
 import { stars } from './list';
 import '../scss/styles.scss';
 
@@ -39,53 +40,8 @@ function init(): void {
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(width, height);
     canvas.appendChild(renderer.domElement);
-
-    // 星のグループ
-    const starsGroup: THREE.Group = new THREE.Group();
+    const [starsGroup, sprites]: [THREE.Group, THREE.Sprite[]] = drawStar(r);
     scene.add(starsGroup);
-
-    const starMaterial: THREE.SpriteMaterial = new THREE.SpriteMaterial({
-        map: new THREE.TextureLoader().load('img/star.png'),
-    });
-
-    type starsObjects = {
-        sprite: readonly THREE.Sprite[];
-        name: readonly string[];
-        v: readonly number[];
-    };
-
-    const sprites: THREE.Sprite[] = [];
-    const starsData: starsObjects[] = [];
-
-    // 星の描画
-    for (let i = 0; i < stars.length; i++) {
-        const sprite = new THREE.Sprite(starMaterial);
-
-        // 赤経を角度に変換したもの(ラジアン)
-        const ra: number = (stars[i].ra * Math.PI) / 180;
-        // 赤緯を角度に変換したもの（ラジアン）
-        const dec: number = (stars[i].dec * Math.PI) / 180;
-        const position: readonly number[] = [
-            r * Math.cos(ra) * Math.cos(dec),
-            r * Math.sin(dec),
-            r * Math.cos(dec) * Math.sin(ra),
-        ];
-        sprite.name = stars[i].pl_name;
-
-        sprite.position.copy(
-            new THREE.Vector3(position[0], position[1], position[2])
-        );
-
-        // 星の大きさを計算
-        const starScale: number = stars[i].st_optmag;
-        sprite.scale.set(starScale, starScale, starScale);
-
-        sprites.push(sprite);
-
-        // グループに追加する
-        starsGroup.add(sprite);
-    }
-
     const mouse = new THREE.Vector2();
     // レイキャスト
     const raycast: THREE.Raycaster = new THREE.Raycaster();
@@ -238,7 +194,7 @@ function init(): void {
                     const info_element: HTMLElement = document.getElementById(
                         'star_info'
                     )!;
-                    info_element.querySelector(
+                    info_element!.querySelector(
                         '.info-pannel_title'
                     )!.textContent = mesh.name;
                     console.log(mesh);
