@@ -5,6 +5,7 @@ import drawStar from './drawStar';
 import fps from './fps';
 import scene from './scene';
 import earth from './earth';
+import { setView, viewStatus } from './view';
 import '../scss/styles.scss';
 
 window.addEventListener('load', init);
@@ -67,18 +68,6 @@ function init(): void {
     const dome: THREE.Mesh = new THREE.Mesh(SPGeometry, SPMaterial);
     scene.add(dome);
 
-    // // 地球
-    // const earthGeometry: THREE.SphereGeometry = new THREE.SphereGeometry(
-    //     40,
-    //     30,
-    //     30
-    // );
-    // const earthMaterial: THREE.MeshStandardMaterial = new THREE.MeshStandardMaterial(
-    //     {
-    //         map: new THREE.TextureLoader().load('img/earthmap1k.jpg'),
-    //     }
-    // );
-    // const earth: THREE.Mesh = new THREE.Mesh(earthGeometry, earthMaterial);
     scene.add(earth);
 
     // 地面
@@ -121,39 +110,41 @@ function init(): void {
     control1.enableDamping = true;
     control1.dampingFactor = 0.1;
 
-    // 視点の切り替え（引数：視点1/3）
-    const controlFunction = (view: 1 | 3) => {
-        const switchButton: HTMLInputElement = <HTMLInputElement>(
-            document.getElementById('earthSwitch')
-        );
-        const resetButton: HTMLElement = <HTMLElement>(
-            document.getElementById('resetButton')
-        );
-        if (view == 3) {
-            switchButton.classList.remove('display_none');
-            switchButton.value = 'true';
-            resetButton.classList.remove('display_none');
-            scene.add(earth);
-        } else if (view == 1) {
-            switchButton.classList.add('display_none');
-            switchButton.value = 'false';
-            resetButton.classList.add('display_none');
-            scene.remove(earth);
-        }
-    };
+    setView();
 
-    // 視点変更
-    const toggleViewDom: HTMLElement = <HTMLElement>(
-        document.getElementById('toggleView')
-    );
-    // 現在の視点
-    let viewStatus: 1 | 3 = 1;
-    toggleViewDom.addEventListener('click', (): void => {
-        toggleViewDom.textContent = `${viewStatus}人称視点に変更`;
-        viewStatus = viewStatus === 3 ? 1 : 3;
-        controlFunction(viewStatus);
-    });
-    controlFunction(viewStatus);
+    // // 視点の切り替え（引数：視点1/3）
+    // const controlFunction = (view: 1 | 3) => {
+    //     const switchButton: HTMLInputElement = <HTMLInputElement>(
+    //         document.getElementById('earthSwitch')
+    //     );
+    //     const resetButton: HTMLElement = <HTMLElement>(
+    //         document.getElementById('resetButton')
+    //     );
+    //     if (view == 3) {
+    //         switchButton.classList.remove('display_none');
+    //         switchButton.value = 'true';
+    //         resetButton.classList.remove('display_none');
+    //         scene.add(earth);
+    //     } else if (view == 1) {
+    //         switchButton.classList.add('display_none');
+    //         switchButton.value = 'false';
+    //         resetButton.classList.add('display_none');
+    //         scene.remove(earth);
+    //     }
+    // };
+
+    // // 視点変更
+    // const toggleViewDom: HTMLElement = <HTMLElement>(
+    //     document.getElementById('toggleView')
+    // );
+    // // 現在の視点
+    // let viewStatus: 1 | 3 = 1;
+    // toggleViewDom.addEventListener('click', (): void => {
+    //     toggleViewDom.textContent = `${viewStatus}人称視点に変更`;
+    //     viewStatus = viewStatus === 3 ? 1 : 3;
+    //     controlFunction(viewStatus);
+    // });
+    // controlFunction(viewStatus);
 
     // 地球表示切替
     document
