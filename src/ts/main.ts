@@ -4,6 +4,7 @@ import './list.ts';
 import drawStar from './drawStar';
 import fps from './fps';
 import '../scss/styles.scss';
+import { scene } from './scene';
 
 window.addEventListener('load', init);
 
@@ -14,8 +15,6 @@ function init(): void {
     const canvas: HTMLCanvasElement = <HTMLCanvasElement>(
         document.querySelector('#main')
     );
-    // シーン
-    const scene: THREE.Scene = new THREE.Scene();
 
     // カメラ(1人称・3人称)
     const camera1: THREE.PerspectiveCamera = new THREE.PerspectiveCamera(
@@ -40,8 +39,10 @@ function init(): void {
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(width, height);
     canvas.appendChild(renderer.domElement);
+
     const [starsGroup, sprites]: [THREE.Group, THREE.Sprite[]] = drawStar(r);
     scene.add(starsGroup);
+
     const mouse = new THREE.Vector2();
     // レイキャスト
     const raycast: THREE.Raycaster = new THREE.Raycaster();
@@ -191,12 +192,8 @@ function init(): void {
             );
             sprites.map((mesh) => {
                 if (intersects.length > 0 && mesh === intersects[0].object) {
-                    const info_element: HTMLElement = document.getElementById(
-                        'star_info'
-                    )!;
-                    info_element!.querySelector(
-                        '.info-pannel_title'
-                    )!.textContent = mesh.name;
+                    document.querySelector('.info-pannel_title')!.textContent =
+                        mesh.name;
                     console.log(mesh);
                 }
             });
