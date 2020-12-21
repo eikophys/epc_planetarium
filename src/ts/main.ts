@@ -3,8 +3,9 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import './list.ts';
 import drawStar from './drawStar';
 import fps from './fps';
+import scene from './scene';
+import earth from './earth';
 import '../scss/styles.scss';
-import { scene } from './scene';
 
 window.addEventListener('load', init);
 
@@ -66,18 +67,18 @@ function init(): void {
     const dome: THREE.Mesh = new THREE.Mesh(SPGeometry, SPMaterial);
     scene.add(dome);
 
-    // 地球
-    const earthGeometry: THREE.SphereGeometry = new THREE.SphereGeometry(
-        40,
-        30,
-        30
-    );
-    const earthMaterial: THREE.MeshStandardMaterial = new THREE.MeshStandardMaterial(
-        {
-            map: new THREE.TextureLoader().load('img/earthmap1k.jpg'),
-        }
-    );
-    const earth: THREE.Mesh = new THREE.Mesh(earthGeometry, earthMaterial);
+    // // 地球
+    // const earthGeometry: THREE.SphereGeometry = new THREE.SphereGeometry(
+    //     40,
+    //     30,
+    //     30
+    // );
+    // const earthMaterial: THREE.MeshStandardMaterial = new THREE.MeshStandardMaterial(
+    //     {
+    //         map: new THREE.TextureLoader().load('img/earthmap1k.jpg'),
+    //     }
+    // );
+    // const earth: THREE.Mesh = new THREE.Mesh(earthGeometry, earthMaterial);
     scene.add(earth);
 
     // 地面
