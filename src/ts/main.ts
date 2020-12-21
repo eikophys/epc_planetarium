@@ -5,6 +5,7 @@ import drawStar from './drawStar';
 import fps from './fps';
 import scene from './scene';
 import earth from './earth';
+import cameras from './cameras';
 import { setView, viewStatus } from './view';
 import '../scss/styles.scss';
 
@@ -18,20 +19,11 @@ function init(): void {
         document.querySelector('#main')
     );
 
-    // カメラ(1人称・3人称)
-    const camera1: THREE.PerspectiveCamera = new THREE.PerspectiveCamera(
-        60,
-        width / height
-    );
-    const camera3: THREE.PerspectiveCamera = new THREE.PerspectiveCamera(
-        45,
-        width / height
-    );
-    camera3.position.set(500, 500, 500);
-    camera3.lookAt(0, 0, 0);
+    const [camera1, camera3]: [
+        THREE.PerspectiveCamera,
+        THREE.PerspectiveCamera
+    ] = cameras(width, height);
     scene.add(camera3);
-    camera1.aspect = 60;
-    camera1.position.set(0, 100, 0);
     scene.add(camera1);
 
     // レンダラー
@@ -111,40 +103,6 @@ function init(): void {
     control1.dampingFactor = 0.1;
 
     setView();
-
-    // // 視点の切り替え（引数：視点1/3）
-    // const controlFunction = (view: 1 | 3) => {
-    //     const switchButton: HTMLInputElement = <HTMLInputElement>(
-    //         document.getElementById('earthSwitch')
-    //     );
-    //     const resetButton: HTMLElement = <HTMLElement>(
-    //         document.getElementById('resetButton')
-    //     );
-    //     if (view == 3) {
-    //         switchButton.classList.remove('display_none');
-    //         switchButton.value = 'true';
-    //         resetButton.classList.remove('display_none');
-    //         scene.add(earth);
-    //     } else if (view == 1) {
-    //         switchButton.classList.add('display_none');
-    //         switchButton.value = 'false';
-    //         resetButton.classList.add('display_none');
-    //         scene.remove(earth);
-    //     }
-    // };
-
-    // // 視点変更
-    // const toggleViewDom: HTMLElement = <HTMLElement>(
-    //     document.getElementById('toggleView')
-    // );
-    // // 現在の視点
-    // let viewStatus: 1 | 3 = 1;
-    // toggleViewDom.addEventListener('click', (): void => {
-    //     toggleViewDom.textContent = `${viewStatus}人称視点に変更`;
-    //     viewStatus = viewStatus === 3 ? 1 : 3;
-    //     controlFunction(viewStatus);
-    // });
-    // controlFunction(viewStatus);
 
     // 地球表示切替
     document
